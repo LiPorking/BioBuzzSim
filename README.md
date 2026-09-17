@@ -1,5 +1,7 @@
 # BIOBUZZ Simulator (FTC 2026-2027)
 
+You can send Suggestions To me in Discord: ".lipor"
+
 A MoSimulator-style 3D driving game for the FIRST Tech Challenge 2026-2027 game
 **BIOBUZZ presented by RTX**, built in **Unity 2023.2.22f1** (built-in render pipeline).
 Everything in the scene is generated from code using the dimensions in the
