@@ -52,7 +52,8 @@ public static class Field
 
     static void BuildFloorAndWalls(Transform root)
     {
-        // Venue floor (catches elements that leave the FIELD).
+        // Venue floor (catches elements that leave the FIELD). Its top sits 0.02 m below the
+        // TILES, so it reads as the hall floor the FIELD stands on and never occludes it.
         var floor = Util.Box(root, "VenueFloor", new Vector3(0, -0.5f - 0.02f, 0), new Vector3(14f, 1f, 12f), new Color(0.12f, 0.12f, 0.13f), true);
         floor.layer = Layers.Field;
         floor.GetComponent<Collider>().sharedMaterial = Util.FieldMat;
@@ -124,8 +125,6 @@ public static class Field
             Tape(root, x0, x1, -ha, -ha - 2, c);
             Tape(root, x1, x1 + 2 * s, -ha - 2, ha + 2, c);
             Util.Box(root, "AllianceArea", new Vector3(s * (73f + d / 2) * Dims.IN, 0.001f, 0), new Vector3(d * Dims.IN, 0.001f, 97f * Dims.IN), new Color(c.r * 0.35f, c.g * 0.35f, c.b * 0.35f), false);
-            // Driver station stand
-            Util.Box(root, "OperatorTable", new Vector3(s * 80f * Dims.IN, 0.35f, 0), new Vector3(0.4f, 0.7f, 1.8f), new Color(0.2f, 0.2f, 0.22f), false);
         }
     }
 

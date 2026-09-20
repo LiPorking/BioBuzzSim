@@ -244,6 +244,12 @@ public class AutoTest : MonoBehaviour
             yield return new WaitForSecondsRealtime(4.5f);   // into AUTO
             Shot("h1_driverstation");
             yield return new WaitForSecondsRealtime(0.3f);
+            rig.mode = CameraRig.Mode.DriverTrack;
+            yield return new WaitForSecondsRealtime(1.2f);   // let the sway settle into motion
+            Shot("h1b_drivertrack");
+            yield return new WaitForSecondsRealtime(1.6f);
+            Shot("h1c_drivertrack");                          // second frame: the view must have moved
+            yield return new WaitForSecondsRealtime(0.3f);
             rig.mode = CameraRig.Mode.ThirdPerson;
             yield return new WaitForSecondsRealtime(1.0f);
             Shot("h2_thirdperson");

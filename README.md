@@ -3,13 +3,13 @@
 You can send Suggestions To me in Discord: ".lipor"
 
 A MoSimulator-style 3D driving game for the FIRST Tech Challenge 2026-2027 game
-**BIOBUZZ presented by RTX**, built in **Unity 2023.2.22f1** (built-in render pipeline).
+**BIOBUZZ presented by RTX**, built in **Unity 6000.6.2f1** (built-in render pipeline).
 Everything in the scene is generated from code using the dimensions in the
 **BIOBUZZ Competition Manual V1** (`Assets/Scripts/Dims.cs` cites the section for every value).
 
 ## Play
 
-Run `Build/BioBuzzSim.exe`, or open this folder in Unity 2023.2 and press Play
+Run `Build/BioBuzzSim.exe`, or open this folder in Unity 6000.6 and press Play
 (`Assets/Scenes/Main.unity`). Build again with **BIOBUZZ ▸ Build Windows**.
 
 Modes: **Match** (30 s AUTO → 8 s transition → 2:00 TELEOP, full scoring and RP), **Free Practice**
@@ -18,6 +18,14 @@ the built-in AUTO or any saved planner file. The whole menu can be driven with a
 (D-pad / stick to move, A to select, B to go back).
 
 
+## Cameras
+
+**C** (gamepad **R3**) cycles: Driver Station, **Driver Station (tracking)**, Third Person,
+Chase, Overhead, Audience. **G** (**L3**) flips the third-person camera 180 degrees.
+
+*Driver Station (tracking)* stands where the drivers stand, but as a person rather than a
+tripod: they shift their weight along the wall, their head rises and falls, and their eyes
+stay on the ROBOT wherever it drives.
 
 ## AUTO PLANNER
 

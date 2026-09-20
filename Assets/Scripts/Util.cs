@@ -18,7 +18,7 @@ public static class Util
     static Material baseMat, transMat, lineMat;
     static readonly Dictionary<Color, Material> opaque = new Dictionary<Color, Material>();
     static readonly Dictionary<Color, Material> clear = new Dictionary<Color, Material>();
-    static PhysicMaterial frictionless, ballMat, fieldMat;
+    static PhysicsMaterial frictionless, ballMat, fieldMat;
 
     public static Material Mat(Color c)
     {
@@ -72,15 +72,15 @@ public static class Util
         return lineMat;
     }
 
-    public static PhysicMaterial Frictionless => frictionless ??= new PhysicMaterial("Frictionless")
-    { dynamicFriction = 0, staticFriction = 0, bounciness = 0, frictionCombine = PhysicMaterialCombine.Minimum, bounceCombine = PhysicMaterialCombine.Minimum };
+    public static PhysicsMaterial Frictionless => frictionless ??= new PhysicsMaterial("Frictionless")
+    { dynamicFriction = 0, staticFriction = 0, bounciness = 0, frictionCombine = PhysicsMaterialCombine.Minimum, bounceCombine = PhysicsMaterialCombine.Minimum };
 
     // Gopher ResisDent polyethylene balls (9.8): moderate bounce.
-    public static PhysicMaterial BallMat => ballMat ??= new PhysicMaterial("Ball")
-    { dynamicFriction = 0.5f, staticFriction = 0.6f, bounciness = 0.35f, frictionCombine = PhysicMaterialCombine.Average, bounceCombine = PhysicMaterialCombine.Average };
+    public static PhysicsMaterial BallMat => ballMat ??= new PhysicsMaterial("Ball")
+    { dynamicFriction = 0.5f, staticFriction = 0.6f, bounciness = 0.35f, frictionCombine = PhysicsMaterialCombine.Average, bounceCombine = PhysicsMaterialCombine.Average };
 
-    public static PhysicMaterial FieldMat => fieldMat ??= new PhysicMaterial("Field")
-    { dynamicFriction = 0.6f, staticFriction = 0.7f, bounciness = 0.2f, frictionCombine = PhysicMaterialCombine.Average, bounceCombine = PhysicMaterialCombine.Average };
+    public static PhysicsMaterial FieldMat => fieldMat ??= new PhysicsMaterial("Field")
+    { dynamicFriction = 0.6f, staticFriction = 0.7f, bounciness = 0.2f, frictionCombine = PhysicsMaterialCombine.Average, bounceCombine = PhysicsMaterialCombine.Average };
 
     public static Color Hex(string hex) => ColorUtility.TryParseHtmlString(hex, out var c) ? c : Color.magenta;
 
@@ -111,7 +111,7 @@ public static class Util
     }
 
     // Collider-only box (invisible).
-    public static GameObject ColBox(Transform parent, string name, Vector3 localPos, Vector3 size, Quaternion? localRot = null, PhysicMaterial pm = null)
+    public static GameObject ColBox(Transform parent, string name, Vector3 localPos, Vector3 size, Quaternion? localRot = null, PhysicsMaterial pm = null)
     {
         var go = new GameObject(name);
         go.transform.SetParent(parent, false);

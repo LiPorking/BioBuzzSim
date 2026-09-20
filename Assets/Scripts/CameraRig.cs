@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CameraRig : MonoBehaviour
 {
-    public enum Mode { DriverStation, ThirdPerson, Follow, Overhead, Audience, Orbit, Planner }
+    public enum Mode { DriverStation, DriverTrack, ThirdPerson, Follow, Overhead, Audience, Orbit, Planner }
     public Mode mode = Mode.DriverStation;
-    public static readonly string[] Names = { "Driver Station", "Third Person (fixed angle)", "Chase", "Overhead", "Audience", "Orbit", "Auto Planner" };
+    public static readonly string[] Names = { "Driver Station", "Driver Station (tracking)", "Third Person (fixed angle)", "Chase", "Overhead", "Audience", "Orbit", "Auto Planner" };
     public static CameraRig I;
 
     // Planner: orthographic top-down view framed inside a screen rectangle (normalized).
@@ -25,7 +25,7 @@ public class CameraRig : MonoBehaviour
 
     public void Cycle()
     {
-        mode = (Mode)(((int)mode + 1) % 5);
+        mode = (Mode)(((int)mode + 1) % 6);
         tpInit = false;
     }
 
@@ -61,7 +61,7 @@ public class CameraRig : MonoBehaviour
         Mode m = mode;
         if (planner) m = Mode.Planner;
         else if (mm == null || (mm.period == Period.Menu && !(Game.I != null && Game.I.Rebuilding))) m = Mode.Orbit;
-        if (focus == null && (m == Mode.Follow || m == Mode.DriverStation || m == Mode.ThirdPerson)) m = Mode.Audience;
+        if (focus == null && (m == Mode.Follow || m == Mode.DriverStation || m == Mode.DriverTrack || m == Mode.ThirdPerson)) m = Mode.Audience;
 
         cam.orthographic = m == Mode.Planner;
         cam.rect = new Rect(0, 0, 1, 1);
@@ -80,6 +80,32 @@ public class CameraRig : MonoBehaviour
                     pos = new Vector3(s * (Dims.Half + 0.95f), 1.75f, z);
                     look = new Vector3(-s * 0.4f, 0.2f, z * 0.3f);
                     lerp = 1f;
+                    break;
+                }
+            case Mode.DriverTrack:
+                {
+                    // Same spot as DriverStation, but as a person rather than a tripod: weight
+                    // shifts side to side along the wall, the head rises and falls a little, and
+                    // the eyes stay on the ROBOT wherever it drives.
+                    float s = focus.alliance.Sign();
+                    float z = focus.station == 1 ? -0.55f : 0.55f;
+                    float t = Time.unscaledTime;
+                    // two out-of-phase sines per axis so the motion never visibly repeats
+                    float sway = Mathf.Sin(t * 0.52f) * 0.26f + Mathf.Sin(t * 0.21f + 1.3f) * 0.11f;
+                    float bob = Mathf.Sin(t * 0.83f) * 0.055f + Mathf.Sin(t * 0.34f + 0.7f) * 0.028f;
+                    float lean = Mathf.Sin(t * 0.29f + 2.1f) * 0.06f;   // drifting towards / away from the wall
+                    pos = new Vector3(s * (Dims.Half + 0.95f + lean), 1.68f + bob, z + sway);
+                    // A driver tracks the ROBOT but keeps their head up. Follow it exactly from
+                    // side to side, and clamp how far the view may tilt down, so a ROBOT against
+                    // the near wall does not leave the camera staring at the floor.
+                    Vector3 aim = focus.transform.position + Vector3.up * 0.16f;
+                    Vector3 d = aim - pos;
+                    Vector3 flat = new Vector3(d.x, 0f, d.z);
+                    float maxDrop = flat.magnitude * Mathf.Tan(34f * Mathf.Deg2Rad);
+                    if (-d.y > maxDrop) d.y = -maxDrop;
+                    look = pos + d;
+                    // fast enough to keep the sway, slow enough that tracking looks human
+                    lerp = 1f - Mathf.Exp(-9f * Time.unscaledDeltaTime);
                     break;
                 }
             case Mode.ThirdPerson:

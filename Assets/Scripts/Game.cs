@@ -19,6 +19,7 @@ public class Game : MonoBehaviour
         if (I != null && I != this) { Destroy(gameObject); return; }
         I = this;
         Application.targetFrameRate = 120;
+        WindowTitle.Apply();
 
         // Small, fast balls need a fine physics step and a small contact offset.
         Time.fixedDeltaTime = 1f / 200f;
