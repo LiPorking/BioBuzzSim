@@ -1,5 +1,5 @@
 # BIOBUZZ Simulator (FTC 2026-2027)
-[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=social&logo=instagram)](https://www.instagram.com/biobuzzsim)
+[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=social&logo=instagram)](https://www.instagram.com/biobuzzsim) Biobuzz
 
 You can send Suggestions To me in Discord: ".lipor"
 
